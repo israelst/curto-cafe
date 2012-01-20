@@ -43,7 +43,7 @@ if __name__ == "__main__":
 	# Create a client object
 	gs = GoogleSpreadsheetsClient(email, password)
 	
-	# Request a file-like object containing the translation spreadsheet's contents
+	# Request a file-like object containing the spreadsheet's contents
 	csv_file = gs.get_spreadsheet(spreadsheet_id)
 	
 	# Parse as CSV and print the rows
