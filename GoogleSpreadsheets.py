@@ -46,10 +46,10 @@ if __name__ == "__main__":
 	spreadsheet_id = "" # (spreadsheet id here)
 
 	# Create a client object
-	gs = GoogleSpreadsheetsClient(email, password)
+	gs = Client(email, password)
 	
 	# Request a file-like object containing the spreadsheet's contents
-	csv_file = gs.get_spreadsheet(spreadsheet_id)
+	csv_file = gs.download(spreadsheet_id)
 	
 	# Parse as CSV and print the rows
 	for row in csv.reader(csv_file):
