@@ -2,9 +2,14 @@
 
 import re, urllib, urllib2
 
-class GoogleSpreadsheetsClient(object):
+class Spreadsheet(object):
+	def __init__(self, key):
+		super(Spreadsheet, self).__init__()
+		self.key = key
+
+class Client(object):
 	def __init__(self, email, password):
-		super(GoogleSpreadsheetsClient, self).__init__()
+		super(Client, self).__init__()
 		self.email = email
 		self.password = password
 	
@@ -18,18 +23,18 @@ class GoogleSpreadsheetsClient(object):
 		}
 		req = urllib2.Request(url, urllib.urlencode(params))
 		return re.findall(r"Auth=(.*)", urllib2.urlopen(req).read())[0]
-
+	
 	def get_auth_token(self):
 		source = type(self).__name__
 		return self._get_auth_token(self.email, self.password, source, service="wise")
-			
-	def get_spreadsheet(self, spreadsheet_id, gid=0, export_format="csv"):
+	
+	def download(self, spreadsheet, gid=0, format="csv"):
 		url_format = "https://spreadsheets.google.com/feeds/download/spreadsheets/Export?key=%s&exportFormat=%s&gid=%i"
 		headers = {
 			"Authorization": "GoogleLogin auth=" + self.get_auth_token(),
 			"GData-Version": "3.0"
 		}
-		req = urllib2.Request(url_format % (spreadsheet_id, export_format, gid), headers=headers)
+		req = urllib2.Request(url_format % (spreadsheet.key, format, gid), headers=headers)
 		return urllib2.urlopen(req)
 
 if __name__ == "__main__":
