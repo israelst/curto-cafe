@@ -45,11 +45,12 @@ if __name__ == "__main__":
 	password = getpass.getpass()
 	spreadsheet_id = "" # (spreadsheet id here)
 
-	# Create a client object
+	# Create client and spreadsheet objects
 	gs = Client(email, password)
+	ss = Spreadsheet(spreadsheet_id)
 	
 	# Request a file-like object containing the spreadsheet's contents
-	csv_file = gs.download(spreadsheet_id)
+	csv_file = gs.download(ss)
 	
 	# Parse as CSV and print the rows
 	for row in csv.reader(csv_file):
