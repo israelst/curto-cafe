@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
-import re, urllib, urllib2
-
+import re, requests
 
 class Client(object):
     def __init__(self, email, password):
@@ -11,14 +10,15 @@ class Client(object):
 
     def _get_auth_token(self, email, password, source, service):
         url = "https://www.google.com/accounts/ClientLogin"
-        params = {
+        data= {
             "Email": email, "Passwd": password,
             "service": service,
             "accountType": "HOSTED_OR_GOOGLE",
             "source": source
         }
-        req = urllib2.Request(url, urllib.urlencode(params))
-        return re.findall(r"Auth=(.*)", urllib2.urlopen(req).read())[0]
+        response = requests.post(url, data=data)
+        response.raise_for_status()
+        return re.findall(r"Auth=(.*)", response.text)[0]
 
     def get_auth_token(self):
         source = type(self).__name__
@@ -30,8 +30,8 @@ class Client(object):
             "Authorization": "GoogleLogin auth=" + self.get_auth_token(),
             "GData-Version": "3.0"
         }
-        req = urllib2.Request(url_format % (spreadsheet.key, format, gid), headers=headers)
-        return urllib2.urlopen(req)
+        response = requests.get(url_format % (spreadsheet_key, format, gid), headers=headers)
+        return response
 
 if __name__ == "__main__":
     from config.gdata import email, password
