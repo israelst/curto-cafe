@@ -2,27 +2,24 @@
 
 import re, requests
 
-class Client(object):
-    def __init__(self, email, password):
-        super(Client, self).__init__()
+class Client:
+    def __init__(self, email, password, source, service='wise'):
         self.email = email
         self.password = password
+        self.source = source
+        self.service = service
 
-    def _get_auth_token(self, email, password, source, service):
+    def get_auth_token(self):
         url = "https://www.google.com/accounts/ClientLogin"
         data= {
-            "Email": email, "Passwd": password,
-            "service": service,
+            "Email": self.email, "Passwd": self.password,
+            "service": self.service,
             "accountType": "HOSTED_OR_GOOGLE",
-            "source": source
+            "source": self.source,
         }
         response = requests.post(url, data=data)
         response.raise_for_status()
         return re.findall(r"Auth=(.*)", response.text)[0]
-
-    def get_auth_token(self):
-        source = type(self).__name__
-        return self._get_auth_token(self.email, self.password, source, service="wise")
 
     def download(self, spreadsheet_key, gid=0, format="ods"):
         url = "https://spreadsheets.google.com/feeds/download/spreadsheets/Export"
@@ -39,10 +36,10 @@ class Client(object):
         return response
 
 if __name__ == "__main__":
-    from config.gdata import email, password
+    from config.gdata import connection_data
 
     spreadsheet_key = "0AsmXhe3Jaw0hdF83S2RGRHhpQzBsbkN5SGRWZ3NLcVE"
-    gs = Client(email, password)
-    response = gs.download(spreadsheet_key, 38, "xls")
-    with open('file.xls', 'w') as xls:
-        xls.write(response.content)
+    gs = Client(*connection_data)
+    response = gs.download(spreadsheet_key, 38)
+    with open('file.ods', 'w') as f:
+        f.write(response.content)
