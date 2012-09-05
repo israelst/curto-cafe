@@ -2,10 +2,6 @@
 
 import re, urllib, urllib2
 
-class Spreadsheet(object):
-    def __init__(self, key):
-        super(Spreadsheet, self).__init__()
-        self.key = key
 
 class Client(object):
     def __init__(self, email, password):
@@ -38,20 +34,8 @@ class Client(object):
         return urllib2.urlopen(req)
 
 if __name__ == "__main__":
-    import getpass
-    import csv
+    from config.gdata import email, password
 
-    email = "" # (your email here)
-    password = getpass.getpass()
-    spreadsheet_id = "" # (spreadsheet id here)
-
-    # Create client and spreadsheet objects
+    spreadsheet_key = "0AsmXhe3Jaw0hdF83S2RGRHhpQzBsbkN5SGRWZ3NLcVE"
     gs = Client(email, password)
-    ss = Spreadsheet(spreadsheet_id)
-
-    # Request a file-like object containing the spreadsheet's contents
-    csv_file = gs.download(ss)
-
-    # Parse as CSV and print the rows
-    for row in csv.reader(csv_file):
-        print ", ".join(row)
+    response = gs.download(spreadsheet_key, 38, "xls")
