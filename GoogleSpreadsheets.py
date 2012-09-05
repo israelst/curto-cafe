@@ -10,6 +10,9 @@ class Client:
         self.service = service
 
     def get_auth_token(self):
+        """Get auth token as described at \
+        https://developers.google.com/accounts/docs/AuthForInstalledApps#Request"""
+
         url = "https://www.google.com/accounts/ClientLogin"
         data= {
             "Email": self.email, "Passwd": self.password,
