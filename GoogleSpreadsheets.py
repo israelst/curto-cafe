@@ -39,3 +39,5 @@ if __name__ == "__main__":
     spreadsheet_key = "0AsmXhe3Jaw0hdF83S2RGRHhpQzBsbkN5SGRWZ3NLcVE"
     gs = Client(email, password)
     response = gs.download(spreadsheet_key, 38, "xls")
+    with open('file.xls', 'w') as xls:
+        xls.write(response.content)
