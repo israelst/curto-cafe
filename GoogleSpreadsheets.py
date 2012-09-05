@@ -24,13 +24,18 @@ class Client(object):
         source = type(self).__name__
         return self._get_auth_token(self.email, self.password, source, service="wise")
 
-    def download(self, spreadsheet, gid=0, format="csv"):
-        url_format = "https://spreadsheets.google.com/feeds/download/spreadsheets/Export?key=%s&exportFormat=%s&gid=%i"
+    def download(self, spreadsheet_key, gid=0, format="ods"):
+        url = "https://spreadsheets.google.com/feeds/download/spreadsheets/Export"
+        params = {
+            'key': spreadsheet_key,
+            'exportFormat': format, 
+            'gid': gid,
+        }
         headers = {
             "Authorization": "GoogleLogin auth=" + self.get_auth_token(),
             "GData-Version": "3.0"
         }
-        response = requests.get(url_format % (spreadsheet_key, format, gid), headers=headers)
+        response = requests.get(url, params=params, headers=headers)
         return response
 
 if __name__ == "__main__":
