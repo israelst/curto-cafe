@@ -1,9 +1,16 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from parser import find_cell
+from parser import find_cell, get_value
 from tests import factories
 
+
+class TestTypes(unittest.TestCase):
+    def test_parse_date(self):
+        self.assertEqual(get_value(factories.date_cell), u'2012-05-04')
+
+    def test_parse_time(self):
+        self.assertEqual(get_value(factories.time_cell), u'09:22:00')
 
 class TestTorraDatails(unittest.TestCase):
     def test_find_cell(self):
