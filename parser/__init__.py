@@ -27,3 +27,9 @@ def get_value(cell):
     else:
         return cell
     #print cell.ctype, cell.value, value
+
+def fill_weight_loss(details):
+    unroasted, roasted = details[u'Qtd café cru (g)'], details[u'Qtd café Torrado (g)']
+    weight_loss = (1 - float(roasted)/float(unroasted)) * 100
+    details[u'Perda Peso na Torra (%)'] = u'{:.2f}%'.format(weight_loss)
+
