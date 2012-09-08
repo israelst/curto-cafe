@@ -24,8 +24,7 @@ class TestTorraDatails(unittest.TestCase):
 
     def test_find_cell(self):
         coord = (9, 2)
-        sheet = factories.workbook.sheet_by_name('662')
-        self.assertEqual(find_cell(u'FICHA TECNICA', sheet), coord)
+        self.assertEqual(find_cell(u'FICHA TECNICA', self.sheet), coord)
 
     def test_fill_weight_loss(self):
         "This is a calculated field, its formula is `1-(D35/D34)`"
