@@ -4,6 +4,15 @@ from xlrd import xldate_as_tuple
 from datetime import time, date
 
 
+def details(sheet):
+    x, y = find_cell(u"FICHA TECNICA", sheet)
+    keys = map(get_value, sheet.col_slice(y, x+1))
+    values = map(get_value, sheet.col_slice(y+1, x+1))
+    details = dict(zip(keys, values))
+    del details[u'']
+    fill_weight_loss(details)
+    return details
+
 def _rows(sheet):
     for row_index in xrange(sheet.nrows):
         yield sheet.row_values(row_index)
@@ -14,7 +23,6 @@ def find_cell(value, sheet):
         except ValueError: pass
 
     return None, None
-
 
 def get_value(cell):
     if cell.ctype == 3:
@@ -32,4 +40,3 @@ def fill_weight_loss(details):
     unroasted, roasted = details[u'Qtd café cru (g)'], details[u'Qtd café Torrado (g)']
     weight_loss = (1 - float(roasted)/float(unroasted)) * 100
     details[u'Perda Peso na Torra (%)'] = u'{:.2f}%'.format(weight_loss)
-
