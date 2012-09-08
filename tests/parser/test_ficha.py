@@ -6,11 +6,14 @@ from tests import factories
 
 
 class TestTypes(unittest.TestCase):
+    def assertValue(self, value, expected):
+        self.assertEqual(get_value(value), expected)
+
     def test_parse_date(self):
-        self.assertEqual(get_value(factories.date_cell), u'2012-05-04')
+        self.assertValue(factories.date_cell, u'2012-05-04')
 
     def test_parse_time(self):
-        self.assertEqual(get_value(factories.time_cell), u'09:22:00')
+        self.assertValue(factories.time_cell, u'09:22:00')
 
 class TestTorraDatails(unittest.TestCase):
     def test_find_cell(self):
