@@ -15,6 +15,9 @@ class TestTypes(unittest.TestCase):
     def test_parse_time(self):
         self.assertValue(factories.time_cell, u'09:22:00')
 
+    def test_useless_spaces_in_field_names(self):
+        self.assertValue(factories.nonstriped_cell, u'Umidade Ambiente')
+
 class TestTorraDatails(unittest.TestCase):
     def test_find_cell(self):
         coord = (9, 2)
