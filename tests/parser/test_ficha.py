@@ -22,6 +22,11 @@ class TestRoastingDatails(unittest.TestCase):
     def setUp(self):
         self.sheet = factories.sheet_662
 
+    def assertDict(self, result, expected):
+        for k, v in expected.iteritems():
+            self.assertEqual(result[k], expected[k])
+        self.assertEqual(result, expected)
+
     def test_find_cell(self):
         coord = (9, 2)
         self.assertEqual(find_cell(u'FICHA TECNICA', self.sheet), coord)
@@ -44,12 +49,7 @@ class TestRoastingDatails(unittest.TestCase):
             u'Tempo Final (min)': u'11.5',
             u'Temperatura Final (ºC)': u'214',
         }
-
-        result = roasting_target(self.sheet)
-
-        for k, v in expected.iteritems():
-            self.assertEqual(result[k], expected[k])
-        self.assertEqual(result, expected)
+        self.assertDict(roasting_target(self.sheet), expected)
 
 
     def test_rosting_done(self):
@@ -61,15 +61,10 @@ class TestRoastingDatails(unittest.TestCase):
             u'Tempo Final (min)': u'',
             u'Temperatura Final (ºC)': u'',
         }
-
-        result = roasting_done(self.sheet)
-
-        for k, v in expected.iteritems():
-            self.assertEqual(result[k], expected[k])
-        self.assertEqual(result, expected)
+        self.assertDict(roasting_done(self.sheet), expected)
 
     def test_details(self):
-        result = {
+        expected = {
              u'Mestre-de-Torra': u'Mario',
              u'Cópia da Torra': '',
              u'Data': u'2012-08-03',
@@ -98,7 +93,4 @@ class TestRoastingDatails(unittest.TestCase):
              u'Perda Peso na Torra (%)': u'16.90%',
              u'Observações da Torra': u'',
         }
-        for k, v in result.iteritems():
-            print k, details(self.sheet)[k], result[k]
-            self.assertEqual(details(self.sheet)[k], result[k])
-        self.assertEqual(details(self.sheet), result)
+        self.assertDict(details(self.sheet), expected)
