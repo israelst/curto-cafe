@@ -6,18 +6,18 @@ from datetime import time, date
 
 def details(sheet):
     x, y = find_cell(u"FICHA TECNICA", sheet)
-    keys = map(get_value, sheet.col_slice(y, x+1))
-    values = map(get_value, sheet.col_slice(y+1, x+1))
-    details = dict(zip(keys, values))
-    del details[u'']
+    details = key_value(x+1, y, x+1, y+1, sheet)
     fill_weight_loss(details)
     return details
 
+def key_value(rowk, colk, rowv, colv, sheet):
+    keys = filter(None, map(get_value, sheet.col_slice(colk, rowv)))
+    values = map(get_value, sheet.col_slice(colv, rowv))[:len(keys)]
+    return dict(zip(keys, values))
+
 def roasting_target(sheet):
     x, y = find_cell(u"Parametros", sheet)
-    keys = filter(None, map(get_value, sheet.col_slice(y, x+1)))
-    values = map(get_value, sheet.col_slice(y+1, x+1))[:len(keys)]
-    return dict(zip(keys, values))
+    return key_value(x+1, y, x+1, y+1, sheet)
 
 def _rows(sheet):
     for row_index in xrange(sheet.nrows):
