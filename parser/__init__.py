@@ -4,6 +4,10 @@ from xlrd import xldate_as_tuple
 from datetime import time, date
 
 
+def sample_name(sheet):
+    x, y = find_cell(u'Amostra', sheet)
+    return get_value(sheet.cell(x+1, y))
+
 def details(sheet):
     x, y = find_cell(u"FICHA TECNICA", sheet)
     details = key_value(x+1, y, x+1, y+1, sheet)

@@ -27,6 +27,9 @@ class TestRoastingDatails(unittest.TestCase):
             self.assertEqual(result[k], expected[k])
         self.assertEqual(result, expected)
 
+    def test_get_sample_name(self):
+        self.assertEqual(sample_name(self.sheet), u'662')
+
     def test_find_cell(self):
         coord = (9, 2)
         self.assertEqual(find_cell(u'FICHA TECNICA', self.sheet), coord)
