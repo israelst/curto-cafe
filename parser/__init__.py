@@ -4,6 +4,14 @@ from xlrd import xldate_as_tuple
 from datetime import time, date
 
 
+def roasting_progress(sheet):
+    x, y = find_cell(u'Tempo (min)', sheet)
+    temp = filter(None, map(get_value, sheet.col_slice(y+1, x+1)))
+    flame = map(get_value, sheet.col_slice(y+2, x+1))[:len(temp)]
+    time = [unicode(_int_if_possible(i/4.0)) for i in xrange(len(temp))]
+    print temp
+    return zip(time, temp, flame)
+
 def sample_name(sheet):
     x, y = find_cell(u'Amostra', sheet)
     return get_value(sheet.cell(x+1, y))
@@ -46,7 +54,7 @@ def get_value(cell):
         else:
             value = date(*datetime_value[:3])
     elif cell.ctype == 2:
-        value = int(cell.value) if cell.value.is_integer() else cell.value
+        value = _int_if_possible(cell.value)
     else:
         value = cell.value
 
@@ -56,3 +64,6 @@ def fill_weight_loss(details):
     unroasted, roasted = details[u'Qtd café cru (g)'], details[u'Qtd café Torrado (g)']
     weight_loss = (1 - float(roasted)/float(unroasted)) * 100
     details[u'Perda Peso na Torra (%)'] = u'{:.2f}%'.format(weight_loss)
+
+def _int_if_possible(value):
+    return int(value) if value.is_integer() else value

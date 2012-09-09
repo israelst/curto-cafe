@@ -18,6 +18,59 @@ class TestTypes(unittest.TestCase):
     def test_useless_spaces_in_field_names(self):
         self.assertValue(factories.nonstriped_cell, u'Umidade Ambiente')
 
+class TestRoastingProgess(unittest.TestCase):
+    def test_roasting_progress(self):
+        expected = [
+           (u'0', u'220', u'igual'),
+           (u'0.25', u'170', u'igual'),
+           (u'0.5', u'128', u'igual'),
+           (u'0.75', u'103', u'igual'),
+           (u'1', u'92', u'igual'),
+           (u'1.25', u'86', u'igual'),
+           (u'1.5', u'85', u'a1'),
+           (u'1.75', u'88', u'igual'),
+           (u'2', u'91', u'igual'),
+           (u'2.25', u'93', u'igual'),
+           (u'2.5', u'101', u'igual'),
+           (u'2.75', u'103', u'igual'),
+           (u'3', u'106', u'igual'),
+           (u'3.25', u'109', u'igual'),
+           (u'3.5', u'115', u'igual'),
+           (u'3.75', u'118', u'igual'),
+           (u'4', u'121', u'igual'),
+           (u'4.25', u'124', u'igual'),
+           (u'4.5', u'128', u'igual'),
+           (u'4.75', u'131', u'igual'),
+           (u'5', u'134', u'igual'),
+           (u'5.25', u'139', u'igual'),
+           (u'5.5', u'143', u'igual'),
+           (u'5.75', u'146', u'igual'),
+           (u'6', u'150', u'igual'),
+           (u'6.25', u'153', u'igual'),
+           (u'6.5', u'156', u'igual'),
+           (u'6.75', u'159', u'igual'),
+           (u'7', u'163', u'igual'),
+           (u'7.25', u'166', u'igual'),
+           (u'7.5', u'169', u'igual'),
+           (u'7.75', u'172', u'd1'),
+           (u'8', u'176', u'igual'),
+           (u'8.25', u'179', u'igual'),
+           (u'8.5', u'183', u'igual'),
+           (u'8.75', u'186', u'igual'),
+           (u'9', u'189', u'igual'),
+           (u'9.25', u'191', u'igual'),
+           (u'9.5', u'193', u'igual'),
+           (u'9.75', u'196', u'igual'),
+           (u'10', u'199', u'igual'),
+           (u'10.25', u'201', u'igual'),
+           (u'10.5', u'203', u'igual'),
+           (u'10.75', u'206', u'igual'),
+           (u'11', u'210', u'igual'),
+           (u'11.25', u'213', u'igual'),
+           (u'11.5', u'214', u'igual'),
+        ]
+        self.assertEqual(expected, roasting_progress(factories.sheet_662))
+
 class TestRoastingDatails(unittest.TestCase):
     def setUp(self):
         self.sheet = factories.sheet_662
