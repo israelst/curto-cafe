@@ -18,7 +18,7 @@ class TestTypes(unittest.TestCase):
     def test_useless_spaces_in_field_names(self):
         self.assertValue(factories.nonstriped_cell, u'Umidade Ambiente')
 
-class TestTorraDatails(unittest.TestCase):
+class TestRoastingDatails(unittest.TestCase):
     def setUp(self):
         self.sheet = factories.sheet_662
 
@@ -34,6 +34,22 @@ class TestTorraDatails(unittest.TestCase):
         }
         fill_weight_loss(details)
         self.assertEqual(details[u'Perda Peso na Torra (%)'], u'16.90%')
+
+    def test_parameters(self):
+        expected = {
+            u'Sabor': u'Amendoado',
+            u"Chama Inicial (ºC)": u"220",
+            u'Tempo do 1° Crack (min)': u'9',
+            u'Temperatura 1° Crack (ºC)': u'189',
+            u'Tempo Final (min)': u'11.5',
+            u'Temperatura Final (ºC)': u'214',
+        }
+
+        result = roasting_target(self.sheet)
+
+        for k, v in expected.iteritems():
+            self.assertEqual(result[k], expected[k])
+        self.assertEqual(result, expected)
 
     def test_details(self):
         result = {

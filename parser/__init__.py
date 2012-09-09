@@ -13,6 +13,12 @@ def details(sheet):
     fill_weight_loss(details)
     return details
 
+def roasting_target(sheet):
+    x, y = find_cell(u"Parametros", sheet)
+    keys = filter(None, map(get_value, sheet.col_slice(y, x+1)))
+    values = map(get_value, sheet.col_slice(y+1, x+1))[:len(keys)]
+    return dict(zip(keys, values))
+
 def _rows(sheet):
     for row_index in xrange(sheet.nrows):
         yield sheet.row_values(row_index)
@@ -31,6 +37,8 @@ def get_value(cell):
             value = time(*datetime_value[3:])
         else:
             value = date(*datetime_value[:3])
+    elif cell.ctype == 2:
+        value = int(cell.value) if cell.value.is_integer() else cell.value
     else:
         value = cell.value
 
