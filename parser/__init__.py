@@ -19,6 +19,10 @@ def roasting_target(sheet):
     x, y = find_cell(u"Parametros", sheet)
     return key_value(x+1, y, x+1, y+1, sheet)
 
+def roasting_done(sheet):
+    x, y = find_cell(u"Parametros", sheet)
+    return key_value(x+1, y, x+1, y+2, sheet)
+
 def _rows(sheet):
     for row_index in xrange(sheet.nrows):
         yield sheet.row_values(row_index)

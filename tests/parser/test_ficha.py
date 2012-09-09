@@ -35,7 +35,7 @@ class TestRoastingDatails(unittest.TestCase):
         fill_weight_loss(details)
         self.assertEqual(details[u'Perda Peso na Torra (%)'], u'16.90%')
 
-    def test_parameters(self):
+    def test_rosting_target(self):
         expected = {
             u'Sabor': u'Amendoado',
             u"Chama Inicial (ºC)": u"220",
@@ -46,6 +46,23 @@ class TestRoastingDatails(unittest.TestCase):
         }
 
         result = roasting_target(self.sheet)
+
+        for k, v in expected.iteritems():
+            self.assertEqual(result[k], expected[k])
+        self.assertEqual(result, expected)
+
+
+    def test_rosting_done(self):
+        expected = {
+            u'Sabor': u'',
+            u"Chama Inicial (ºC)": u'',
+            u'Tempo do 1° Crack (min)': u'',
+            u'Temperatura 1° Crack (ºC)': u'',
+            u'Tempo Final (min)': u'',
+            u'Temperatura Final (ºC)': u'',
+        }
+
+        result = roasting_done(self.sheet)
 
         for k, v in expected.iteritems():
             self.assertEqual(result[k], expected[k])
