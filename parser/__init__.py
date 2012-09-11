@@ -9,7 +9,6 @@ def roasting_progress(sheet):
     temp = filter(None, map(get_value, sheet.col_slice(y+1, x+1)))
     flame = map(get_value, sheet.col_slice(y+2, x+1))[:len(temp)]
     time = [unicode(_int_if_possible(i/4.0)) for i in xrange(len(temp))]
-    print temp
     return zip(time, temp, flame)
 
 def sample_name(sheet):
