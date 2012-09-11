@@ -1,3 +1,1 @@
-gdata==2.0.17
-python-google-spreadsheet==1.0.4
 xlrd==0.8.0
