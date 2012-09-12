@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="https://raw.github.com/DmitryBaranovskiy/raphael/300aa589f5a0ba7fce667cd62c7cdda0bd5ad904/raphael-min.js"></script>
+  <script src="https://raw.github.com/oesmith/morris.js/0.3.0/morris.min.js"></script>
+  <script src="../data.js"></script>
+  <script src="../data2.js"></script>
+<style>
+body {
+  width: 800px;
+  margin: 0 auto;
+}
+#graph {
+  width: 800px;
+  height: 250px;
+  margin: 20px auto 0 auto;
+}
+pre {
+  height: 250px;
+  overflow: auto;
+}
+</style>
+</head>
+<body>
+    <h1>Roasting Curve</h1>
+    <select id="combo" onchange="change(this)" size=5>
+    </select> 
+<div id="graph"></div>
+<script>
+graph = Morris.Line({
+  element: 'graph',
+  data: data['TORRA VOLTA REDONDA ( RIO DE JANEIRO).xls,70'],
+  xkey: 'time',
+  ykeys: ['temp'],
+  labels: ['Temperature'],
+  xLabels: 'minute',
+  parseTime: false
+});
+function change(element){
+    // console.log(element.value)
+    graph.setData(data[element.value])
+}
+
+combo = document.getElementById('combo')
+for(k in data){
+    option = document.createElement('option')
+    option.value = k;
+    option.innerHTML = k;
+    combo.add(option)
+}
+
+</script>
+<!--
+a = ['temp']
+for(k in data){a.push(k)}
+Morris.Line({
+  element: 'graph',
+  data: data2,
+  xkey: 'time',
+  ykeys: a,
+});
+-->
+</body>
+</html>
